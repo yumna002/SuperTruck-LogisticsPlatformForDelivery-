@@ -1,0 +1,19 @@
+{
+    "notFoundException": "user not found",
+    "unauthorizedException": "wrong phoneNumber or password",
+    "forbiddenException": "you are not authorized",
+    "sessionExistException": "Session already exists",
+    "clientNotReadyException": "client is not ready yet",
+    "noWhatsappException": "the number provided is no registered on Whatsapp",
+    "wrongPasswordException": "wrong password",
+    "phoneNumberTakenException": "phoneNumber already registered",
+    "usedException":"this model is used and can't be deleted",
+    "conflictException": "there is a conflic while doing this operation (user already exists)",
+    "onlineOfflineException": "can't change state while on a trip",
+    "alreadyExistException": "already this object exist",
+    "noDriverFoundException": "sorry, couldn't find a suitable driver",
+    "createOrderBadRequestException" : "order is missing required fields",
+    "noNullValuesBadRequestException" : "order contains null fields that are required",
+    "orderAlreadyConfirmedException" : "order has already been confirmed",
+    "tooManyRequestsException" : "too many requests in limited time"
+}

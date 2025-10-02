@@ -1,0 +1,11 @@
+{
+    "isNumber":"أرقام فقط",
+    "isNotEmpty":"لا يجب أن تكون فارغة",
+    "isString":"أحرف فقط",
+    "isEmail":"يجب أن يكون نمط ايميل",
+    "phoneNumberRule": "+9639 يجب أن تبدأ",
+    "accountPasswordRule": "على الأقل 8 أحرف وأرقام",
+    "isEnum": "فقط enum نوع",
+    "isOptional": "اختياري",
+    "nationalNumberRule": "النص يجب ان يحوي فقط ارقام"
+}

@@ -1,0 +1,11 @@
+{
+    "isNumber":"only numbers",
+    "isNotEmpty":"must be not empty",
+    "isString":"only string",
+    "isEmail":"must be email type",
+    "phoneNumberRule": "must start with +9639",
+    "accountPasswordRule": "at least 8 long chars and numbers",
+    "isEnum": "must be from enum type",
+    "isOptional": "This field is optional",
+    "nationalNumberRule": "string must contain only numbers"
+}

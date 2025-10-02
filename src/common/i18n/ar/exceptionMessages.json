@@ -1,0 +1,19 @@
+{
+    "notFoundException":"المستخدم غير موجود",
+    "unauthorizedException": "خطأ في الرقم أو كلمة المرور",
+    "forbiddenException": "غير مصرح لك",
+    "sessionExistException": "الجلسة موجودة مسبقا",
+    "clientNotReadyException": "المستخدم غير جاهز",
+    "noWhatsappException": "الرقم غير مسجل على واتساب",
+    "wrongPasswordException": "كلمة المرور غير صحيحة",
+    "phoneNumberTakenException": "رقم الهاتف مسجل مسبقا",
+    "usedException":"هذا النوع مستخدم لا يمكن حذفه",
+    "conflictException": "يوجد خطأ اثناء حدوث العملية (المستخدم موجود مسبقا)",
+    "onlineOfflineException": "لا يمكن تغيير الحالة أثناء العمل على طلب",
+    "alreadyExistException": "هذا العنصر موجود سابقا",
+    "noDriverFoundException":"نعتذر لم نتمكن من إيجاد سائق مناسب",
+    "createOrderBadRequestException" : "يوجد معلومات ناقصة",
+        "noNullValuesBadRequestException" : "يوجد حقول غير معبأه",
+    "orderAlreadyConfirmedException" : "تم إرسال الطلب مسبقا",
+    "tooManyRequestsException" : "الكثير من الطلبات ضمن وقت محدود"
+}

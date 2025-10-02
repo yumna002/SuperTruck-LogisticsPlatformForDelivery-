@@ -1,0 +1,60 @@
+import { INestApplication } from '@nestjs/common';
+import { CustomerSeeder } from 'src/database/seeds/customerSeeder.seeder';
+import { EmployeeSeeder } from '../employeeSeeder.seeder';
+import { UserSeeder } from '../userSeeder.seeder';
+import { DriverSeeder } from '../driverSeeder.seeder';
+import { AddressSeeder } from '../addressSeeder.seeder';
+import { RoleSeeder } from '../roleSeeder.seeder';
+import { FuelTypeSeeder } from '../fuelTypeSeeder.seeder';
+import { sizeTypeSeeder } from '../sizeTypeSeeder.seeder';
+import { VehicleTypeSeeder } from '../vehicleTypeSeeder.seeder';
+import { TruckModelSeeder } from '../truckModelSeeder.seeder';
+import { TruckSeeder } from '../truckSeeder.seeder';
+import { CategorySeeder } from '../categorySeeder.seeder';
+import { CategoryTypeSeeder } from '../categoryTypeSeeder.seeder';
+import { ItemSizeSeeder } from '../itemSizeSeeder.seeder';
+import { ItemWeightSeeder } from '../itemWeightSeeder.seeder';
+import { PaymentTypeSeeder } from '../paymentTypeSeeder.seeder';
+import { OrderSeeder } from '../orderSeeder.seeder';
+import { ItemSeeder } from '../itemSeeder.seeder';
+import { ProcessingOrderSeeder } from '../processingOrderSeeder.seeder';
+import { ClosedOrderSeeder } from '../closedOrderSeeder.seeder';
+import { RateSeeder } from '../rateSeeder.seeder';
+import { RejectReason } from 'src/modules/rejected-orders/entities/reject-reason.entity';
+import { RejectedOrder } from 'src/modules/rejected-orders/entities/rejected-order.entity';
+import { RejectReasonSeeder } from '../rejectReasonSeeder.seeder';
+import { RejectedOrderSeeder } from '../rejectedOrderSeeder.seeder';
+import { ScheduledOrderSeeder } from '../scheduleOrderSeeder.seeder';
+import { PricingSeeder } from '../pricingSeeder.seeder';
+import { ProfitSeeder } from '../profitSeeder.seeder';
+
+
+
+export async function setupSeeders(app: INestApplication) {
+    await app.get(RoleSeeder).run();
+    await app.get(UserSeeder).run();
+    await app.get(FuelTypeSeeder).run();
+    await app.get(sizeTypeSeeder).run();
+    await app.get(VehicleTypeSeeder).run();
+    await app.get(EmployeeSeeder).run();
+    await app.get(TruckModelSeeder).run();
+    await app.get(CustomerSeeder).run();
+    await app.get(DriverSeeder).run();
+    await app.get(AddressSeeder).run();
+    await app.get(TruckSeeder).run();
+    await app.get(CategorySeeder).run();
+    await app.get(PaymentTypeSeeder).run();
+    await app.get(ItemSizeSeeder).run();
+    await app.get(ItemWeightSeeder).run();
+    await app.get(OrderSeeder).run();
+    await app.get(CategoryTypeSeeder).run();
+    await app.get(ItemSeeder).run();
+    await app.get(ProcessingOrderSeeder).run();
+    await app.get(ClosedOrderSeeder).run();
+    await app.get(RateSeeder).run();
+    await app.get(RejectReasonSeeder).run();
+    await app.get(RejectedOrderSeeder).run();
+    await app.get(ScheduledOrderSeeder).run();
+    await app.get(PricingSeeder).run();
+    await app.get(ProfitSeeder).run();
+}
