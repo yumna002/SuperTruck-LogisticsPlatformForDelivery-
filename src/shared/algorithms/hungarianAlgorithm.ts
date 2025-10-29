@@ -20,7 +20,6 @@ export class HungarianAlgorithm { //munkres algorithm
 
 
     async initMatrix(orders:OrderObj[], drivers:number[], driverRepo: Repository<Driver>,googleMapsService:GoogleMapsService) {
-        console.log('hi 1');
         let r=orders.length,c=drivers.length;
         if(r>c){ //number of order > drivers
             for(let i=0;i<r-c;i++){
@@ -40,10 +39,8 @@ export class HungarianAlgorithm { //munkres algorithm
                 });
             }
         }
-console.log('hi 2');
         this.n=Math.max(c,r);
 
-console.log('hi 3=> n= ',this.n);
         for(let i=0;i<this.n;i++){
             for(let j=0;j<this.n;j++){
                 if(orders[i].orderId==-1)this.cost[i][j]=this.maxDummy;
@@ -58,10 +55,7 @@ console.log('hi 3=> n= ',this.n);
             }
         }
 
-        console.log('const= ');
         console.log(this.cost);
-
-        console.log('hi 4');
     }
 
     async ckmin(a, b) {
@@ -76,8 +70,6 @@ console.log('hi 3=> n= ',this.n);
         let assignment = new Array(this.n + 1).fill(-1);
         let h = new Array(this.n).fill(0); //johnson potentials
 
-        console.log('abeer1');
-
         const inf = this.inf;//Number.MAX_SAFE_INTEGER;
 
         for (let j_cur = 0; j_cur < this.n; j_cur++) {
@@ -89,59 +81,39 @@ console.log('hi 3=> n= ',this.n);
             let vis = new Array(this.n + 1).fill(false);
             let prv = new Array(this.n + 1).fill(-1);
 
-            console.log('abeer2');
-
             while (assignment[w_cur] !== -1) {
                 let min_dist = inf;
                 vis[w_cur] = true;
                 let w_next = -1;
 
-                console.log('abeer3');
-
                 for (let w = 0; w < this.n; w++) {
                     if (!vis[w]) {
-                    console.log('12121212121');
-                    console.log('w_cur= ',w_cur);
-                    console.log('w= ',w);
-                    console.log('assignment[w_cur]= ',assignment[w_cur]);
                     let edge = this.cost[assignment[w_cur]][w] - h[w];
-                    console.log('maybe heer');
                     if (w_cur !== this.n) {
-                        console.log('heer');
                         edge -= this.cost[assignment[w_cur]][w_cur] - h[w_cur];
-                        console.log('orrr');
                         if (edge < 0) throw new Error("Assertion failed: edge >= 0");
-                        console.log('wayy');
                     }
-                    console.log('abeer4');
                     let distObj = { value: dist[w] };
                     if (await this.ckmin(distObj, dist[w_cur] + edge)) prv[w] = w_cur;
                     dist[w] = distObj.value;
-
-                    console.log('abeer5');
 
                     let minObj = { value: min_dist };
                     if (await this.ckmin(minObj, dist[w])) w_next = w;
                     min_dist = minObj.value;
                     }
-                    console.log('abeer6');
                 }
                 w_cur = w_next;
-                console.log('abeer7');
             }
-            console.log('abeer8');
-
+            
             for (let w = 0; w < this.n; w++) {
                 dist[w] = Math.min(dist[w], dist[w_cur]);
                 h[w] += dist[w];
             }
-            console.log('abeer9');
-
+            
             while (w_cur !== this.n) {
                 assignment[w_cur] = assignment[prv[w_cur]];
                 w_cur = prv[w_cur];
             }
-            console.log('abeer10');
         }
 
         return assignment;

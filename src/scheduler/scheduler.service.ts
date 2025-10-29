@@ -92,10 +92,7 @@ export class SchedulerService {
         allAreas.add(n);
 
       for(let area of allAreas){
-        console.log('area= ',area);
-
         let drivers=await this.getSuitableDriversFromArea(area,order.order.sizeTypeId,order.order.vehicleTypeId);
-         console.log('drivers= ',drivers);
         for(let d of drivers)
           allSuitableDrivers.add(d);
       }

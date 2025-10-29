@@ -52,8 +52,6 @@ export class OrderQueueScheduler {
     const batchSize = Math.min(this.priorityQueue.size(), 500);
     const batch: OrderObj[] = [];
 
-    console.log('y1');
-
     // take top 500
     for (let i = 0; i < batchSize; i++) {
       const order=await this.priorityQueue.pop();
@@ -61,16 +59,11 @@ export class OrderQueueScheduler {
       order.numberOfAttempts*=-1;
       batch.push(order);
     }
-    console.log('batch= ',batch);
-    if(batch[0])console.log('test= ',batch[0].order.toAddress);
 
     if(batch.length==0)return;
 
-    console.log('y2');
-
     //get suitable drivers for the orders
     const driversSet=await this.schedulerService.getNearbyDrivers(batch);
-    console.log('y3');
     //return the orders to queue if didnt find any suitable drivers
     if(driversSet.size==0){
       for (let i = 0; i < batch.length; i++){
@@ -80,23 +73,15 @@ export class OrderQueueScheduler {
       return;
     }
 
-    console.log('y4');
-
     let drivers: number[]=[];
     for(let d of driversSet){
       drivers.push(d);
     }
-    console.log('drivers= ',drivers);
-
-    console.log('y5');
 
     this.logger.log(`Processing ${batch.length} orders`);
     
     //match drivers and orders
     const result=await this.hungarian.solve(batch,drivers,this.driverRepository,this.googleMapsService); //[orderObj,driverId]
-
-    console.log('y6');
-    console.log('result= ',result);
 
     //send requests to drivers
     for(const [orderObj, driverId] of result){
@@ -107,8 +92,6 @@ export class OrderQueueScheduler {
       }
       this.sendOrderRequestToDriver(orderObj,driverId); //must not be await
     }
-
-    console.log('y7');
   }
 
   async sendOrderRequestToDriver(order: OrderObj, driverId:number){
@@ -118,7 +101,6 @@ export class OrderQueueScheduler {
     if(!driver){
       throw new Error('error in assignment in driver');
     }
-    console.log('id= ',driverId);
     let truck = await this.truckRepository.findOne({
       where: {
         driver: { id: driverId }, 
@@ -126,7 +108,6 @@ export class OrderQueueScheduler {
       },
       relations: ['driver'],
     });    
-    console.log('is here??');
     if(!truck){
       throw new Error('error in assignment in driver truck');
     }
@@ -144,21 +125,15 @@ export class OrderQueueScheduler {
       },
       relations: ['order'],
     });  
-    console.log(pendingOrder);
     if(!pendingOrder){
       throw new NotFoundException(I18nKeys.exceptionMessages.notFoundException);
     }
     pendingOrder.driverId=driverId;
     await this.pendingOrderRepository.save(pendingOrder);
 
-    console.log('yoyo1');
-
     const response = await this.driverGateway.waitForDriverResponse(order.orderId)!;
 
-    console.log('yoyo2');
-
     if(response.accepted){ //driver accept order
-      console.log('acc');
       const [lat,lng] = driverNowLocation.get(driverId) ?? [-1, -1];
       if(lat===-1){
           throw new Error('in matching evaluation');
@@ -195,7 +170,6 @@ export class OrderQueueScheduler {
       this.customerGateway.sendOrderStatusUpdate(order.order.customerId,{orderId:order.orderId,accepted:response.accepted});
     }
     else{ //driver reject order
-      console.log('rej');
       //mark driver available
       driver.isAvailable=1;
       await this.driverRepository.save(driver);

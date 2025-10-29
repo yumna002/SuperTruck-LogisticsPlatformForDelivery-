@@ -25,6 +25,8 @@ export class DriverGateway implements OnGatewayConnection, OnGatewayDisconnect{
   @WebSocketServer()
   server: Server;
 
+  //------------------must use here Redis------------------
+
   private driverResponses: Map<string, (response: DriverResponse) => void>;
   private driverSockets: Map<number, string>; //Map<driverId, socketId>
   //we take snapshot every 1 minute
@@ -142,7 +144,6 @@ export class DriverGateway implements OnGatewayConnection, OnGatewayDisconnect{
     this.customerGateway.handleDriverLocation(data);
     
     let t=this.ordersTime.get(data.orderId);
-    console.log('h1');
     if(!t){
       console.log('init snapshot');
       this.ordersTime.set(data.orderId,0);
@@ -150,11 +151,8 @@ export class DriverGateway implements OnGatewayConnection, OnGatewayDisconnect{
 
       t=0;
     } 
-    console.log('h2');
     t++;
     this.ordersTime.set(data.orderId,t);
-
-    console.log('iam in driver location time= ',t);
     
     await this.checkTime(data.orderId, data.lat, data.lng, t); //this must without await
     
@@ -166,8 +164,6 @@ export class DriverGateway implements OnGatewayConnection, OnGatewayDisconnect{
     if(lat1==-1){
       throw new Error('eror in checkTime');
     }
-
-    console.log('time= ',time);
     
     if(time%10==0){
       const addedDistance=await calculateDistance(lat1,lng1,lat2,lng2);
@@ -176,13 +172,6 @@ export class DriverGateway implements OnGatewayConnection, OnGatewayDisconnect{
       if(d1==-1){
         throw new Error('eror in checkTime in getting distance from current');
       }
-
-      console.log('i am in set snapshot value');
-      console.log('orderId= ', orderId);
-      console.log('last distance= ', d1);
-      console.log('added distance= ', addedDistance);
-      console.log('lat1= ', lat1, '    lng1= ',lng1);
-      console.log('lat2= ', lat2, '    lng2= ',lng2);
 
       this.ordersCurrent.set(orderId,[d1+addedDistance,t1+addedTime]);
       this.ordersLastSnapshots.set(orderId,[[lat2,lng2],t1+addedTime]);
