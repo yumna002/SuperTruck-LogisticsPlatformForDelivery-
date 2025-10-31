@@ -143,7 +143,7 @@ export class ProcessingOrdersService {
     console.log(updateProcessingOrderStateDto.state);
     if(updateProcessingOrderStateDto.state==ProcessingOrderStateEnum.FINISHED){
       //notify customer that order is finished
-      //await this.notificationsService.notify({userId:processingOrder.order.customerId,title:'Finish Order',body:'your order arrived and unloaded'});
+      await this.notificationsService.notify({userId:processingOrder.order.customerId,title:'Finish Order',body:'your order arrived and unloaded'});
       
       console.log("here")
       void (async () => {

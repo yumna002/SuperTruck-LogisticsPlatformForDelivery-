@@ -58,24 +58,26 @@ import { Pricing } from 'src/modules/pricing/entities/pricing.entity';
 import { PricingSeeder } from './seeds/pricingSeeder.seeder';
 import { Profit } from 'src/modules/payments/entities/profit.entity';
 import { ProfitSeeder } from './seeds/profitSeeder.seeder';
+import { ConfigService } from '@nestjs/config';
 
 
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-	    useFactory() {
+      inject: [ConfigService],
+	    useFactory(config: ConfigService) {
 	      return {
 	        type: 'mysql',
-	        port: 3306,
-	        host: 'localhost',
+	        port: config.get<string>('DB_PORT'),
+	        /*host: 'localhost',
 	        username: 'root',
 	        password: 'root',
-          database: 'supertruckdb',
-          /*host: 'grad-supertruck-back-mysql',
-          username: 'grad-project',
-          password: 'grad-project123',
-          database: 'grad-project',*/
+          database: 'supertruckdb',*/
+          host: config.get<string>('DB_HOST'),
+          username: config.get<string>('DB_USERNAME'),
+          password: config.get<string>('DB_PASSWORD'),
+          database: config.get<string>('DB_NAME'),
           entities: [User, Driver, Customer, Employee, Address, Role, TruckModel, SizeType, VehicleType, FuelType, Truck, Order, Item, ItemSize, ItemWeight, Category, CategoryType, PaymentType, ProcessingOrder, ClosedOrder, Rate, RejectedOrder, RejectReason, Photo, PendingOrder, ScheduledOrder, Pricing,Profit],
 	        synchronize: true,
 	        logging: false,

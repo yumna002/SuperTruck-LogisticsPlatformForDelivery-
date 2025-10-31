@@ -179,7 +179,7 @@ export class ScheduledOrdersService {
     await this.delete({id:scheduledOrder.orderId});
 
     //send notification to customer 
-    //notify customer that sce=heduled order is starting
-    //await this.notificationsService.notify({userId:scheduledOrder.order.customerId,title:'Start Scheduled Order',body:'your scheduled order is starting now'});
+    //notify customer that scheduled order is starting
+    await this.notificationsService.notify({userId:scheduledOrder.order.customerId,title:'Start Scheduled Order',body:'your scheduled order is starting now'});
   }
 }
